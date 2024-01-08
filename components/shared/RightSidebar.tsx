@@ -2,8 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import RenderTag from "./RenderTag";
-const hotquestions = [{ _id: 1, title: "first question with its titles" }];
-const populartoags = [{ _id: 1, name: "javascript", totalquestions: 5 }];
+const hotquestions = [{ _id: "1", title: "first question with its titles" }];
+const populartoags = [{ _id: "1", name: "javascript", totalquestions: 5 }];
 const RightSidebar = () => {
   return (
     <section
