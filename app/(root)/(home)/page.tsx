@@ -5,58 +5,15 @@ import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import { getQuestions } from "@/lib/actions/question.action";
 import Link from "next/link";
 import React from "react";
 
-const question = [
-  {
-    _id: "q1",
-    title: "How to use TypeScript with React?",
-    tags: [
-      { _id: "tag1", name: "TypeScript" },
-      { _id: "tag2", name: "React" },
-    ],
-    author: {
-      _id: "author1",
-      name: "Alice",
-      picture: "alice-profile.jpg",
-    },
-    upvotes: 20,
-    views: 100,
-    answers: [
-      {
-        /* Structure of answer object not defined in the interface */
-      },
-      // ...
-    ],
-    createdAt: new Date("2023-01-01"),
-  },
+const page = async () => {
+  const result = await getQuestions({});
 
-  {
-    _id: "q2",
-    title: "Best practices for responsive web design?",
-    tags: [
-      { _id: "tag3", name: "Web Design" },
-      { _id: "tag4", name: "Responsive Design" },
-    ],
-    author: {
-      _id: "author2",
-      name: "Bob",
-      picture: "bob-profile.jpg",
-    },
-    upvotes: 15,
-    views: 80,
-    answers: [
-      {
-        /* Structure of answer object not defined in the interface */
-      },
-      // ...
-    ],
-    createdAt: new Date("2022-02-15"),
-  },
-];
+  console.log(result.questions);
 
-const page = () => {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -83,8 +40,8 @@ const page = () => {
       </div>
       <HomeFilters />
       <div className="mt-10 flex w-full flex-col gap-6">
-        {question.length > 0 ? (
-          question.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
