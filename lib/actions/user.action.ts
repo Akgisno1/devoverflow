@@ -46,25 +46,25 @@ export async function updateUser(params: UpdateUserParams) {
     throw error;
   }
 }
-// export async function deleteUser(params: DeleteUserParams) {
-//   try {
-//     connectToDatabase();
+export async function deleteUser(params: DeleteUserParams) {
+  try {
+    connectToDatabase();
+    const { clerkId } = params;
+    const user = await User.findOneAndDelete({ clerkId });
+    if (!user) {
+      throw new ErrorEvent("user not found");
+    }
 
-//     const user = await User.findOneAndDelete({clerkId });
-//     if (!user) {
-//       throw new ErrorEvent("user not found");
-//     }
+    const userQuestionIds = await Question.find({ author: user._id }).distinct(
+      "_id"
+    );
 
-//     const userQuestionIds = await Question.find({ author: user._id }).distinct(
-//       "_id"
-//     );
+    await Question.deleteMany({ author: user._id });
 
-//     await Question.deleteMany({ author: user._id });
-
-//     const deletedUser = await User.findByIdAndUpdate(user._id);
-//     return deletedUser;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
+    const deletedUser = await User.findByIdAndUpdate(user._id);
+    return deletedUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
